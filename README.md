@@ -6,6 +6,7 @@ Status](https://travis-ci.org/n8henrie/nmfishingreport.svg?branch=master)](https
 Scrapes the NM Dept of Game and Fish fishing report
 
 - Free software: MIT
+- Documentation: https://nmfishingreport.readthedocs.org
 
 ## Features
 
@@ -99,9 +100,9 @@ avoid this entirely.
     - Dump all reports to your screen:
         - `sqlite3 fishing_reports.db 'SELECT * FROM nm_fishing_reports;'`
     - Show the 10 most recent reports:
-        - `sqlite3 fishing_reports.db 'SELECT * FROM nm_fishing_reports ORDER BY date DESC LIMIT 10;'
+        - `sqlite3 fishing_reports.db 'SELECT * FROM nm_fishing_reports ORDER BY date DESC LIMIT 10;'`
     - Show the 5 most recent reports for the Jemez waters:
-        - `sqlite3 fishing_reports.db 'SELECT date, report FROM nm_fishing_reports WHERE spot LIKE "%Jemez%" ORDER BY date DESC LIMIT 5;'
+        - `sqlite3 fishing_reports.db 'SELECT date, report FROM nm_fishing_reports WHERE spot LIKE "%Jemez%" ORDER BY date DESC LIMIT 5;'`
     - Show the most recent spot to have had the word "excellent" in the report:
         - `sqlite3 fishing_reports.db 'SELECT date, spot FROM nm_fishing_reports WHERE report LIKE "% excellent %" ORDER BY date DESC LIMIT 1;'`
     - Show what times of year the Jemez fishing has been "very good" or
