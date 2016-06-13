@@ -28,6 +28,7 @@ buzzwords I've selected.
 ## Dependencies
 
 - Python3
+- OS X or Linux
 - See `requirements.txt`
 
 ## Quickstart
@@ -106,3 +107,5 @@ avoid this entirely.
     - Show what times of year the Jemez fishing has been "very good" or
       "excellent":
         - `sqlite3 fishing_reports.db 'SELECT date FROM nm_fishing_reports WHERE (report LIKE "% very good %" OR report LIKE "% excellent %") AND spot LIKE "%Jemez%";'`
+- How can I run `nmfishingreport` automatically?
+    - If you're on OS X, I've included an example launchd plist in `extras/`
