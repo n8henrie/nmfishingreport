@@ -89,8 +89,9 @@ def main(config_file="config.ini"):
 
         # If old date is unset or newer data available
         if old_date is None or cur_date > old_date[0]:
-            all_spots = soup.find_all(lambda x: x.name == 'p' and
-                                      x.next.name == "strong")
+            reports_start = soup.find('h2', text="Statewide Waters")
+            all_spots = reports_start.find_all_next(lambda x: x.name == 'p' and
+                                                    x.next.name == "strong")
 
             spots_dict = {}
             for each_spot in all_spots:
