@@ -1,4 +1,4 @@
-"""fishing_report.py
+"""fishing_report.py :: Scrape NM fishing report into local database.
 
 Pulls fishing reports from NM Dept of Game and Fish, imports into local db.
 Puts most recent report from my favorite spots into text file, optionally runs
