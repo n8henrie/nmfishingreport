@@ -9,10 +9,10 @@ the `notify` function in `notify_script` if it has the any of the
 import datetime
 import logging
 import sqlite3
+import urllib.request
 from configparser import ConfigParser
 
 import bs4
-import requests
 
 
 def split_conf_str(conf_str):
@@ -24,8 +24,9 @@ def split_conf_str(conf_str):
 
 
 def get_current_report(url):
-    html = requests.get(url).text
-    soup = bs4.BeautifulSoup(html, 'html.parser')
+    with urllib.request.urlopen(url) as req:
+        html = req.read()
+    soup = bs4.BeautifulSoup(html, "html.parser")
     return soup
 
 
