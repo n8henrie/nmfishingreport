@@ -13,7 +13,7 @@ class NoInternetError(Exception):
     pass
 
 
-def internet_on(retries=6, delay=5, timeout=1):
+def internet_on(retries=3, timeout=4, delay=5):
     google_url = 'http://google.com'
 
     for x in range(retries):
