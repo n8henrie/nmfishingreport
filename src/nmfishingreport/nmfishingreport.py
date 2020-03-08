@@ -98,8 +98,15 @@ def main(config_file="config.ini"):
 
             spots_dict = {}
             for each_spot in all_spots:
-                # Because of messy html this may be the most reliable way
-                spot, report = map(str.strip, each_spot.text.split(":", 1))
+                if ":" in each_spot.text:
+                    spot, report = (
+                        s.strip() for s in each_spot.text.split(":", 1)
+                    )
+                else:
+                    spot_tag = each_spot.find("strong")
+                    spot = spot_tag.text.strip()
+                    report = spot_tag.next_sibling.strip()
+
                 spots_dict.update({spot: report})
 
             for spot, report in spots_dict.items():
