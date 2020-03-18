@@ -49,5 +49,3 @@ config.ini
 fishing_reports.db
 
 nmfishingreport
-oxidize/*
-!oxidize/pyoxidizer.toml
