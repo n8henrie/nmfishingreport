@@ -12,7 +12,7 @@ import sqlite3
 import urllib.request
 from configparser import ConfigParser
 
-import bs4  # type: ignore
+import bs4
 
 
 def split_conf_str(conf_str):
