@@ -91,7 +91,7 @@ def main(config_file="config.ini"):
 
         # If old date is unset or newer data available
         if old_date is None or cur_date > old_date[0]:
-            reports_start = soup.find("h2", text="Statewide Waters")
+            reports_start = soup.find("h3", text="Message from the Department")
             all_spots = reports_start.find_all_next(
                 lambda x: x.name == "p" and x.next.name == "strong"
             )
@@ -105,7 +105,10 @@ def main(config_file="config.ini"):
                 else:
                     spot_tag = each_spot.find("strong")
                     spot = spot_tag.text.strip()
-                    report = spot_tag.next_sibling.strip()
+                    if sib := spot_tag.next_sibling:
+                        report = sib.strip()
+                    else:
+                        continue
 
                 spots_dict.update({spot: report})
 
