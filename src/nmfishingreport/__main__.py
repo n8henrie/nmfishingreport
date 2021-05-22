@@ -10,7 +10,7 @@ import argparse
 from . import internet_on
 from . import nmfishingreport
 
-parser = argparse.ArgumentParser()
+parser = argparse.ArgumentParser(prog="nmfishingreport")
 parser.add_argument('-c', '--config', default='config.ini', help="Config file "
                     "for nmfishingreport.py")
 args = parser.parse_args()
