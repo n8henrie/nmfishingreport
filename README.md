@@ -1,7 +1,7 @@
 # NM Fishing Report
 
-[![Build
-Status](https://travis-ci.org/n8henrie/nmfishingreport.svg?branch=master)](https://travis-ci.org/n8henrie/nmfishingreport)
+master: [![master branch build
+status](https://github.com/n8henrie/nmfishingreport/actions/workflows/python-package.yml/badge.svg?branch=master)](https://github.com/n8henrie/nmfishingreport/actions/workflows/python-package.yml)
 
 Scrapes the NM Dept of Game and Fish fishing report
 
