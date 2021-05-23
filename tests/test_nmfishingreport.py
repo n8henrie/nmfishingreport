@@ -32,7 +32,8 @@ def test_split_conf_str():
 
 def test_get_current_date():
     soup = BeautifulSoup("""<span class="updated" style="display:none;">
-                            2016-05-27T13:50:37+00:00               </span>""")
+                            2016-05-27T13:50:37+00:00               </span>""",
+                        "html.parser")
     cur_date = nmfishingreport.get_current_date(soup)
     assert str(cur_date) == '2016-05-27'
 
