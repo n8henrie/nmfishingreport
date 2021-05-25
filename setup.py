@@ -1,17 +1,10 @@
-# -*- coding: utf-8 -*-
-
 import re
-from setuptools import setup, find_packages
 
-try:
-    import pypandoc
+from setuptools import find_packages, setup
 
-    readme = pypandoc.convert("README.md", "rst")
-    history = pypandoc.convert("HISTORY.md", "rst")
-except ImportError:
-    with open("README.md") as readme_file, open("HISTORY.md") as history_file:
-        readme = readme_file.read()
-        history = history_file.read()
+with open("README.md") as readme_file, open("HISTORY.md") as history_file:
+    readme = readme_file.read()
+    history = history_file.read()
 
 with open("requirements.txt") as requirements_file:
     requirements = requirements_file.read().splitlines()
@@ -33,6 +26,7 @@ setup(
     version=__version__,
     description="Scrapes the NM Dept of Game and Fish fishing report",
     long_description=readme + "\n\n" + history,
+    long_description_content_type="text/markdown",
     author="Nathan Henrie",
     author_email="nate@n8henrie.com",
     url="https://github.com/n8henrie/nmfishingreport",
@@ -52,5 +46,5 @@ setup(
     ],
     extras_require={"dev": dev_requirements},
     test_suite="tests",
-    tests_require=["pytest>=2.8.7"],
+    tests_require=["pytest>=6.2.4"],
 )
