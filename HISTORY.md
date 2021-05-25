@@ -1,5 +1,9 @@
 # History
 
+## 0.1.2 :: 20210525
+
+- Try to fix the `setup.py`. Should have pushed to PyPI test first!
+
 ## 0.1.1 :: 20210525
 
 - Accomodate minor change to the post-pandemic website layout
