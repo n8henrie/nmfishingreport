@@ -44,8 +44,8 @@ buzzwords I've selected.
 
 1. Clone the repo: `git clone https://github.com/n8henrie/nmfishingreport && cd
    nmfishingreport`
-1. Make a virtualenv: `python3 -m venv venv`
-1. Install dev setup: `venv/bin/pip install .[dev]`
+1. Make a virtualenv: `python3 -m venv .venv`
+1. Install dev setup: `./.venv/bin/pip install .[dev]`
 
 ## Configuration
 
