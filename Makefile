@@ -58,7 +58,7 @@ clean-docs:
 	rm -f docs/modules.rst
 
 docs: clean-docs
-	source venv/bin/activate && sphinx-apidoc -o docs/ src/nmfishingreport
+	source ./.venv/bin/activate && sphinx-apidoc -o docs/ src/nmfishingreport
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 	open docs/_build/html/index.html
@@ -69,9 +69,9 @@ register: dist
 release: dist
 	twine upload dist/*
 
-venv:
-	$(PYTHON) -m venv venv
-	venv/bin/pip install --upgrade pip
+.venv:
+	$(PYTHON) -m venv .venv
+	./.venv/bin/pip install --upgrade pip
 
 dist: clean docs
 	$(PYTHON) setup.py --long-description | rst2html.py --halt=2
