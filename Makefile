@@ -1,71 +1,51 @@
-SHELL := /bin/bash
-PYTHON = /usr/bin/env python3
-PWD = $(shell pwd)
+PYTHON = $(shell pyenv which python)
 GREP := $(shell command -v ggrep || command -v grep)
 SED := $(shell command -v gsed || command -v sed)
 
-.PHONY: clean-pyc clean-build docs clean register release clean-docs copy-db
-
+.PHONY: help
 help:
-	@echo "clean - remove all build, test, coverage and Python artifacts"
-	@echo "clean-build - remove build artifacts"
-	@echo "clean-pyc - remove Python file artifacts"
-	@echo "clean-test - remove test and coverage artifacts"
-	@echo "lint - check style with flake8"
-	@echo "test - run tests quickly with the default Python"
-	@echo "test-all - run tests on every Python version with tox"
-	@echo "coverage - check code coverage quickly with the default Python"
-	@echo "docs - generate Sphinx HTML documentation, including API docs"
-	@echo "release - package and upload a release"
-	@echo "dist - package"
+	@awk '/^[^ \t]*:/ { gsub(":.*", ""); print }' Makefile
 
+.PHONY: clean
 clean: clean-build clean-pyc clean-test
 
+.PHONY: clean-build
 clean-build:
 	rm -fr build/
 	rm -fr dist/
 	rm -fr *.egg-info
 	rm -fr src/*.egg-info
 
+.PHONY: clean-pyc
 clean-pyc:
 	find . -name '*.pyc' -exec rm -f {} +
 	find . -name '*.pyo' -exec rm -f {} +
 	find . -name '*~' -exec rm -f {} +
 	find . -name '__pycache__' -exec rm -fr {} +
 
+.PHONY: clean-test
 clean-test:
 	rm -fr .tox/
 	rm -f .coverage
 	rm -fr htmlcov/
 
+.PHONY: lint
 lint:
 	flake8 nmfishingreport tests
 
+.PHONY: test
 test:
 	py.test tests
 
+.PHONY: test-all
 test-all:
 	tox
 
-coverage:
-	coverage run --source nmfishingreport setup.py test
-	coverage report -m
-	coverage html
-	open htmlcov/index.html
-
-clean-docs:
-	rm -f docs/nmfishingreport*.rst
-	rm -f docs/modules.rst
-
-docs: clean-docs
-	source ./.venv/bin/activate && sphinx-apidoc -o docs/ src/nmfishingreport
-	$(MAKE) -C docs clean
-	$(MAKE) -C docs html
-	open docs/_build/html/index.html
-
+.PHONY: register
 register: dist
 	twine register dist/*.whl
 
+.PHONY: release
 release: dist
 	twine upload dist/*
 
@@ -73,12 +53,7 @@ release: dist
 	$(PYTHON) -m venv .venv
 	./.venv/bin/pip install --upgrade pip
 
-dist: clean docs
-	$(PYTHON) setup.py --long-description | rst2html.py --halt=2
-	$(PYTHON) setup.py sdist
-	$(PYTHON) setup.py bdist_wheel
-	ls -l dist
-
+.PHONY: copy-db
 copy-db: fishing_reports.db
 	cp -i $< 20150918-$$(date +%Y%m%d)_fishing_reports.db
 
@@ -87,6 +62,7 @@ oxidize:
 	cd oxidize && pyoxidizer build --release
 	find oxidize/build -path '*/release/*' -type f -perm -110 -exec cp {} . \; -quit
 
+.PHONY: update-reqs
 update-reqs: requirements.txt
 		@$(GREP) --invert-match --no-filename '^#' requirements*.txt | \
 				$(SED) 's|==.*$$||g' | \
