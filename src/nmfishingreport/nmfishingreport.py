@@ -11,6 +11,7 @@ import logging
 import sqlite3
 import urllib.request
 from configparser import ConfigParser
+from pathlib import Path
 
 import bs4
 
@@ -45,13 +46,16 @@ def main(config_file="config.ini"):
     config.read(config_file)
     fishing_config = config["FISHING_REPORT"]
 
+    logfile = fishing_config.get("logfile", "fishing_report.log")
+    logfile = Path(logfile).expanduser()
+
     logging.basicConfig(
         level=logging.WARNING,
         format=(
             "%(asctime)s %(name)-12s %(lineno)d %(levelname)-8s " "%(message)s"
         ),
         datefmt="%%Y-%%m-%%d %%H:%%M:%%S",
-        filename=fishing_config.get("logfile", "fishing_report.log"),
+        filename=str(logfile),
         filemode="a",
     )
 
@@ -59,16 +63,16 @@ def main(config_file="config.ini"):
     logger = logging.getLogger(logger_name)
 
     # File where results for fav_fishing_spots written as text
-    outfile = fishing_config.get("outfile")
+    outfile = Path(fishing_config.get("outfile")).expanduser()
 
-    db = fishing_config.get("db", "fishing_reports.db")
+    db = Path(fishing_config.get("db", "fishing_reports.db")).expanduser()
 
     fav_fishing_spots = split_conf_str(fishing_config.get("fav_spots"))
 
     if config.has_section("NOTIFY"):
         notify_config = config["NOTIFY"]
         notify_words = split_conf_str(notify_config.get("notify_words"))
-        notify_script = notify_config.get("notify_script")
+        notify_script = Path(notify_config.get("notify_script")).expanduser()
     else:
         notify_words = []
 
@@ -131,8 +135,7 @@ def main(config_file="config.ini"):
                 if any(
                     word.lower() in fav_report.lower() for word in notify_words
                 ):
-                    with open(notify_script) as f:
-                        notify_func = f.read()
+                    notify_func = notify_script.read_text()
                     exec(notify_func, globals())
                     notify_dict = {
                         "url": url,
@@ -142,5 +145,5 @@ def main(config_file="config.ini"):
                     notify(notify_dict, config_file=config_file)  # noqa
 
             if outfile is not None:
-                with open(outfile, "w", encoding="utf8") as f:
+                with outfile.open("w") as f:
                     f.write(txt_out)
