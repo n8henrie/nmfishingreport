@@ -1,5 +1,10 @@
 # History
 
+## 0.1.3 :: 20210901
+
+- Use `pathlib` to make it easier to use `~` in `config.ini`
+- Update to pyproject.toml
+
 ## 0.1.2 :: 20210525
 
 - Try to fix the `setup.py`. Should have pushed to PyPI test first!
