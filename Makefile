@@ -82,6 +82,11 @@ dist: clean docs
 copy-db: fishing_reports.db
 	cp -i $< 20150918-$$(date +%Y%m%d)_fishing_reports.db
 
+.PHONY: oxidize
+oxidize:
+	cd oxidize && pyoxidizer build --release
+	find oxidize/build -path '*/release/*' -type f -perm -110 -exec cp {} . \; -quit
+
 update-reqs: requirements.txt
 		@$(GREP) --invert-match --no-filename '^#' requirements*.txt | \
 				$(SED) 's|==.*$$||g' | \
